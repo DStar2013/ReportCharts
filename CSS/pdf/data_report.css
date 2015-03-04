@@ -1,0 +1,201 @@
+@charset "utf-8";
+/* 
+ * Desc  : onlineReport pdf
+ * Creat : 2015.01.12
+ * Author: zhp
+ * Modify: 2015.02.04 By zhp
+*/
+
+body, html {font-family: microsoft yahei;}
+* {margin: 0;padding: 0;}
+ul, li {list-style: none;}
+table {border-collapse: collapse;border-spacing: 0;}
+@page {size: A4 portrait;margin-left: 0cm;margin-right: 0cm;}
+
+
+/* public */
+.center {text-align: center;}
+.space {padding: 0 25px;}
+.mb30 {margin-bottom: 30px;}
+.mb20 {margin-bottom: 20px;}
+.mb10 {margin-bottom: 10px;}
+.bdb {border-bottom: 1px solid #d7d7d7;}
+.tac {text-align: center;}
+.fl {float: left;}
+.fr {float: right;}
+
+/* 主容器 */
+.main-c {width: 1178px;border:1px solid #999;margin:0 auto;}
+
+/* header */
+.header {border-bottom: 2px solid #2577e3;height: 70px;}
+.hd-logo {float:left; margin-left:20px; padding-top:15px; overflow:hidden; width:107px; height:39px;}
+.hd-logo a {display:block; width:107px; height:40px;background:url(http://pic.c-ctrip.com/droco/img/icon.png?20140514) no-repeat;font-size: 0;text-indent: -9999px;}
+.hd-siteTitle {float:left; margin:0 20px;padding-top:22px; text-align:center; letter-spacing:2px; font-size:18px; font-weight:400; color:#2577E3;}
+.hd-siteTitle em {display:block; letter-spacing:0; font:12px simsun,serif; color:#606060;}
+.hd-languageVersion {float:left; padding-top:23px;}
+.hd-languageVersion li {float:left; margin-right:6px;}
+.hd-languageVersion a {background: #fcc;font-size: 0;text-indent: -9999px;overflow: hidden;display: block;width: 24px;height: 17px;}
+.hd-info {float: right;padding-right: 20px;}
+.hd-info li {float: left;margin-left: 15px;color: #333;line-height: 70px;font-size: 12px;}
+.hd-info .label {color: #999;}
+
+/* 页面容器与标题 */
+.page-c {padding:30px 26px;zoom: 1;overflow: hidden;}
+.page-title {display: inline-block;*display: inline;*zoom:1;position: relative;height: 53px;margin-bottom: 28px;margin-left: -26px;padding: 0 28px 0 25px;font-size: 32px;color: #fff;background: #1c76ec;line-height: 53px;min-width: 130px;font-style: italic;}
+.page-title .sub {font-size: 18px;margin-left: 10px;}
+.page-title .sub-e {color: #7da7f2;}
+.page-title .line {display: inline-block;vertical-align: 5px;background-color: #fff;width: 40px;height: 1px;margin-left: 10px;}
+.page-title .subName {font-size: 16px;font-style: normal;}
+.page-title .tria-b, .page-title .tria-f {position: absolute;right: 0;bottom: 0;display:block;border:12px solid transparent;border-color: transparent #fff #fff transparent; height: 0;width: 0;}
+.page-title .tria-f {border-width: 10px;border-color: transparent #ff9914 #ff9914 transparent;right: 1px;bottom: 1px;}
+
+/* box */
+.box-c2, .box-c21, .box-c3 {padding-bottom: 30px;margin-bottom: 30px;overflow: hidden;border-bottom: 1px solid #d7d7d7;}
+.box-c2 .m-l, .box-c21 .m-l {float: left;}
+.box-c2 .m-r, .box-c21 .m-r {overflow: hidden;border-left: 1px solid #d7d7d7;padding-left: 30px;}
+.box-c21 .m-r {border-left: 0 none;}
+.box-c3 .m-l, .box-c31 .m-l {float: left;width: 47.5%;padding-right: 2.5%;border-right: 1px solid #ccc;margin-right: -1px;}
+.box-c3 .m-r, .box-c31 .m-r {padding-left: 2.5%;overflow: hidden;border-left: 1px solid #d7d7d7;}
+.box-c31 .m-l {margin-right: 0;}
+.box-c31 .m-l, .box-c31 .m-r {border:0 none;}
+
+
+/* msg-box */
+.msg-box {padding-left: 42px;font-size: 16px;line-height: 20px;color: #333;}
+.msg-info {background: url(../img/icon-info.png) no-repeat 0 4px;}
+
+/* total-bill */
+.total-bill {padding-top: 20px;overflow: hidden;}
+.total-bill .item {float: left;width: 248px;height: 118px;border:1px solid #e4e4e4;border-radius: 4px;background-color: #f0f0f0;text-align: center;margin-right: 30px;}
+.total-bill .last {margin-right: 0;}
+.total-bill .cost {margin-top: 20px;color: #f60;font-size: 30px;font-family: arial;}
+.total-bill .cost-r {color: #00a2f6;}
+.total-bill .cost span {margin-right: 5px;font-size: 18px;}
+.total-bill .desc {font-size: 22px;color:#664;}
+
+/* mod */
+.mod {zoom: 1;border-bottom: 1px solid #d7d7d7;margin-bottom: 30px;}
+
+/* header */
+.mod-hd {margin-bottom: 15px;font-size: 16px;color: #333;font-weight: normal;}
+.mod-hd-icon {padding-left: 52px;}
+.mod-hd-sub {margin-bottom: 5px;font-size: 14px;color: #666;font-weight: normal;}
+
+/* visual-data */
+.visual-data {text-align: center;}
+.visual-data img {display: block;margin: 0 auto;}
+
+/* list */
+.list {margin-bottom: 30px;overflow: hidden;zoom: 1;}
+.list .item {float: left;width: 180px;font-size: 14px;margin-right: 20px;}
+.list .item-small {width: 90px;margin-right: 10px;}
+.list .item-auto {width: auto;}
+.list .text-c1 {color: #00a2ff;line-height: 1.5;font-size: 16px;}
+.list .text-c2 {color: #23b330;line-height: 1.5;font-size: 16px;}
+.list .price {color: #00a2ff;font-size: 18px;line-height: 1.5;}
+.list .price span {margin-right: 4px;}
+.list .fs-small {font-size: 14px;}
+.list .fs-large {font-size: 18px;}
+
+/* v-list */
+.v-list {text-align: center;}
+.v-list .title {margin-bottom: 15px;font-size: 16px;color: #333;font-weight: normal;}
+.v-list .list-l {float: left;}
+.v-list .list-r {margin-left: 190px;}
+.v-list .s-list {width: 170px;}
+.v-list .item {background-color: #97c4f3;line-height: 24px;height: 24px;margin-bottom: 6px;color: #fff;font-size: 14px;}
+.v-list .price {text-align: center;}
+.v-list .price span {margin-right: 8px;font-size: 12px;font-family: arial;}
+
+/* table */
+.data-table {width: 100%;font-family: arial;}
+.data-table th, .data-table td {border:1px solid #e3e3e3;}
+.data-table thead th {background: #2577E3;height: 36px;line-height: 36px;color: #fff;font-size: 14px;font-weight: normal;border:1px solid #4d92eb;border-bottom: 0 none;}
+.data-table tbody th, .data-table tbody td {height: 36px;line-height: 36px;}
+.data-table tbody th {font-size: 14px;color: #666;}
+.data-table tbody td {font-size: 12px;color: #333;}
+.data-table .body-foot th {background-color: #f5f5f5;color: #333;font-size: 14px;font-weight: bold;}
+.data-table tfoot th {background: #f5f5f5;height: 36px;line-height: 36px;color: #333;font-size: 14px;font-weight: bold;border-top: 0 none;}
+
+.table-interleave tbody tr:nth-child(2n) td {background-color: #e8f6ff;}
+
+.table-2 {width: 100%;font-family: arial;}
+.table-2 th, .table-2 td {height: 20px;padding: 8px;}
+.table-2 thead th {background: #2577E3;color: #fff;font-size: 14px;font-weight: normal;border-bottom: 0 none;}
+.table-2 tbody td {border-bottom: 1px dashed #ccc;font-size: 12px;color: #333;}
+.table-2 tfoot th {font-size: 12px;color: #333;background-color: #f5f5f5;border-bottom: 2px solid #ccc;}
+.table-2 .bdsolid td {border-bottom: 1px solid #ccc;}
+.table-2 .crHead th {border:1px solid #5197f5;padding: 2px 8px;}
+
+/* ratio-bar */
+.ratio-bar {margin-left: 65px;position: relative;zoom: 1;}
+.ratio-bar .num {position: absolute;left: -65px;top: 0;width: 60px;display: block;text-align: right;padding-right: 5px;line-height: 15px;}
+.ratio-bar .ratio {background-color: #1d74e6;height: 15px;*float: left;}
+
+/* 提示文字 text-tips */
+.text-tips {color: #999;font-size: 14px;line-height: 1.5;}
+.text-tips-2 {color: #333;font-size: 14px;line-height: 36px;}
+
+/* progressBar */
+.progress_box {margin:80px 0; }
+.progress_box .progress_bar {position:relative; width:370px; height:25px; margin:0 auto; border:solid #D8D8D8; border-width:1px 0 0 1px; border-radius:12px; background-color:#f0f0f0; }
+.progress_box .progress_bar .num {position:absolute;z-index: 12; top:-20px; font:12px simsun; color:#999999; }
+.progress_box .progress_bar .num_left {left:0; }
+.progress_box .progress_bar .num_right {right:0;}
+.progress_box .progress_bar .inner {overflow:hidden; border-radius:12px; }
+.progress_box .progress {float:left; height:25px; }
+.progress_box .color1 {background-color:#7EBBFF; }
+.progress_box .color2 {background-color:#56A4FC; }
+.progress_box .color3 {background-color:#2788F6; }
+.progress_box .color4 {background-color:#0072F3; }
+.progress_box .progress_info {position:absolute; z-index:7; }
+.progress_box .progress_info.type1,
+.progress_box .progress_info.type3,
+.progress_box .progress_info.type5,
+.progress_box .progress_info.type7 {top:-42px; }
+.progress_box .progress_info.type2,
+.progress_box .progress_info.type4,
+.progress_box .progress_info.type6,
+.progress_box .progress_info.type8 {top:-3px; }
+.progress_box .progress_info.type5, .progress_box .progress_info.type6, .progress_box .progress_info.type7, .progress_box .progress_info.type8{*width: 73px; *height: 71px;}
+.progress_box .progress_info span {display:block; height:34px; font:12px/24px simsun; color:#2788F6; white-space:nowrap; background:url(http://pic.c-ctrip.com/droco/img/bubbles.png); }
+.progress_box .progress_info i {float:left; width:28px; height:28px; box-shadow:2px 2px 2px rgba(0,0,0,.4); border:1px solid #D8D8D8; border-radius:14px; background-color:#EDEDED; }
+.progress_box .progress_info .color {border-color:#FF9C39; background-color:#FF9C39; }
+.progress_box .progress_info.type1 .bubble_wrap {margin:0 9px 5px 0; padding-left:7px; background-position:0 0; }
+.progress_box .progress_info.type1 .bubble_inner {padding-right:9px; background-position:right 0; }
+.progress_box .progress_info.type1 i {float:right; }
+.progress_box .progress_info.type2 .bubble_wrap {clear:both; margin-right:7px; padding-left:7px; background-position:0 -108px; }
+.progress_box .progress_info.type2 .bubble_inner {overflow:hidden; padding-right:9px; line-height:44px; background-position:right -108px; }
+.progress_box .progress_info.type2 i {float:right; margin-bottom:7px; }
+.progress_box .progress_info.type3 .bubble_wrap {margin:0 0 5px 8px; padding-right:8px; background-position:right -144px; }
+.progress_box .progress_info.type3 .bubble_inner {padding-left:8px; background-position:0 -144px; }
+.progress_box .progress_info.type4 .bubble_wrap {clear:both; margin-left:9px; padding-right:8px; background-position:right -180px; }
+.progress_box .progress_info.type4 .bubble_inner {overflow:hidden; padding-left:8px; line-height:44px; background-position:0 -180px; }
+.progress_box .progress_info.type4 i {margin-bottom:7px; }
+.progress_box .progress_info.type5 .bubble_wrap {margin:0 0 5px 8px; padding-right:8px; background-position:right -36px; }
+.progress_box .progress_info.type5 .bubble_inner {padding-left:8px; background-position:0 -36px; }
+.progress_box .progress_info.type6 .bubble_wrap {clear:both; margin-left:9px; padding-right:8px; background-position:right -72px; }
+.progress_box .progress_info.type6 .bubble_inner {overflow:hidden; padding-left:8px; line-height:44px; background-position:0 -72px; }
+.progress_box .progress_info.type6 i {margin-bottom:7px; }
+.progress_box .progress_info.type7 .bubble_wrap {margin:0 9px 5px 0; padding-left:8px; background-position:0 -216px; }
+.progress_box .progress_info.type7 .bubble_inner {padding-right:8px; background-position:right -216px; }
+.progress_box .progress_info.type7 i {float:right; }
+.progress_box .progress_info.type8 .bubble_wrap {clear:both; margin-right:7px; padding-left:8px; background-position:0 -252px; }
+.progress_box .progress_info.type8 .bubble_inner {overflow:hidden; padding-right:8px; line-height:44px; background-position:right -252px; }
+.progress_box .progress_info.type8 i {float:right; margin-bottom:7px; }
+.progress_box .shadow_layer {position:absolute; left:0; top:0; z-index:6; width:370px; height:25px; box-shadow:inset 3px 3px 3px rgba(0,0,0,.3); border-radius:12px; }
+
+/* ratio-list */
+.ratio-list li {position: relative;zoom: 1;color: #333;overflow: hidden;*vertical-align: middle; }
+.ratio-list .label {float: left;width: 60px;line-height: 20px;font-size: 12px;padding-right: 10px;text-align: right;border-right: 1px solid #bfd0e1;padding-top: 6px;padding-bottom: 3px;}
+.ratio-list .label-w3 {width: 100px;}
+.ratio-list .r-bar {overflow: hidden;background-color: #297cdb;height: 20px;margin-top: 5px;float: left;}
+.ratio-list .num {float: left;width: 55px;font-size: 12px;line-height: 20px;margin-top: 5px;padding-left: 5px;}
+
+/* planeTreeAD */
+.planeTreeAD {width: 354px;margin:0 auto;text-align: center;}
+.planeTreeAD .text {font-size: 38px;color: #00a0ff;}
+.planeTreeAD .pic {margin-top: 45px;position: relative;*zoom: 1;}
+.planeTreeAD .pic .benefit-tag {float: right;position: absolute;right: 0;top: -25px;}
+.planeTreeAD .pic .tree {clear: right;display: inline-block;}

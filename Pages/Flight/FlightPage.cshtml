@@ -1,0 +1,133 @@
+﻿@{
+    Layout = null;
+}
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=4.0, user-scalable=yes" name="viewport">
+<title>Data Report of Ctrip Online</title>
+<!-- path -->
+@using Ctrip.Corp.Report.Utility;
+@{
+    string cssPath = (Enums.ResLangEnum.en.ToString().Equals(ViewBag.Lang, StringComparison.OrdinalIgnoreCase) ? "en" : "zh-cn");
+    @this.Css(cssPath + "/global.css", this.Request.UserAgent.ToLower().Contains("ipad") ? cssPath + "/global_pad.css" : "")
+}
+<script type="text/javascript">
+    //国际化静态资源数据
+    var corpReport_Common = @Html.Raw(ViewBag.Common);
+    var corpReport_FlightPage = @Html.Raw(ViewBag.Model["jsData"]);
+</script>
+</head>
+
+<body>
+<div class="clearfix header">
+</div>
+<div class="view_wrap"><div class="clearfix container">
+<div class="sub_nav on">
+	<div class="sub_logo">
+		<i class="icon i4">&times;</i>
+	</div>
+</div>
+<div class="main_cnt clearfix">
+	<div class="filter_bar">
+        <div class="menu_ico"></div>
+	</div>
+	<div class="fp fp1">
+		<div class="box box1 br2px bb2px">
+			<i class="icon i9"></i>
+			<p><span id="fltConsumPID"></span>@ViewBag.Model["lbl_TotalExpenses"]</p>
+			<p><span id="fltAvgPID"></span>@ViewBag.Model["lbl_AvgPrice"]</p>
+		</div>
+		<div class="box box2 bb2px" id="fltConExID">
+			<h3>
+				@ViewBag.Model["lbl_AirfareExpenses"]
+				<span id="fltConsumSelID">
+				</span>
+			</h3>
+			<div class="" id="fltConsumID" style="height:110px">
+			</div>
+		</div>
+		<div class="box box3 br2px bb2px" id="fltFivExID">
+			<h3>
+				@ViewBag.Model["lbl_Top5Dept"]
+				<span id="fltFivePartSelID">
+				</span>
+			</h3>
+			<div class="" id="fltFivePartConsum" style="height:310px">
+			</div>
+		</div>
+		<div class="box box4 bb2px" id="fltDesExID">
+			<h3>
+				@ViewBag.Model["lbl_Top5Dest"]
+				<span id="fltFiveDesSelID">
+				</span>
+			</h3>
+			<div class="" id="fltFiveDesConsum" style="height:310px">
+			</div>
+			<i class="white_block"></i>
+		</div>
+		<div class="box box5 br2px">
+			<h3>@ViewBag.Model["lbl_TicketChange"]</h3>
+			<div class="filter_bars">
+				<div class="filter_option option4" id="bkChangeType">
+					<label>@ViewBag.Model["lbl_Type"]</label>
+					<span mark='0' id="bkTypeSpan">
+						@ViewBag.Model["lbl_ChangeFee"]
+						<i class="icon i5"></i>
+					</span>
+                    <div class="option_box hidepop" style="display:none">
+                        <ul>
+                        <li><a href="javascript:;" title="@ViewBag.Model["lbl_ChangeFee"]" mark='0'>@ViewBag.Model["lbl_ChangeFee"]</a></li>
+                        <li><a href="javascript:;" title="@ViewBag.Model["lbl_ChangeRate"]" mark='1'>@ViewBag.Model["lbl_ChangeRate"]</a></li>
+                        </ul>
+                    </div>
+				</div>
+				<div class="filter_option option4" id="bkChangePeriod">
+					<label>@ViewBag.Model["lbl_TimePeriod"]</label>
+					<span mark='0' id="bkPerSpan">
+						无数据
+						<i class="icon i5"></i>
+					</span>
+                    <div class="option_box hidepop" style="display:none" id="bkPerSelID">
+                    </div>
+				</div>
+			</div>
+			<div class="" id="bkChangeChartID" style="height:140px">
+			</div>        
+		</div>
+		<div class="box box6">
+			<h3>@ViewBag.Model["lbl_ReservationMethod"]</h3>
+			<div class="" id="bkMethodID" style="height:140px">
+			</div>
+			<i class="white_block"></i>
+		</div>
+	</div>
+</div>
+</div><input type="hidden" id="page_id" value="109204"/></div>
+
+<div class="footer">
+</div>
+<div class="no_data" id="noDataID" style="display:none"><img src="http://pic.ctrip.com/droco/img/loading.gif" alt=""></div>
+
+@this.Script("fame/jquery-1.9.1.min.js","commpub/common.js", "commpub/header.js", "fame/droco.js")
+<script type="text/javascript">
+    //语言环境
+    var lanType = "@Html.Raw(ViewBag.Lang)";
+	//配置文件信息
+    var _cfgInfo = @Html.Raw(ViewBag.Config);
+	//头部选中条件
+	var _headSelectInfo = CM.hashAny(window.location.hash);
+	//头部搜索条件
+	var _headInitInfo = {
+	    masterAccountInfo: @Html.Raw(ViewBag.JsonAccountIDs),
+        departmentInfo: @Html.Raw(ViewBag.JsonPartInfo),
+        consumerAttrInfo: @Html.Raw(ViewBag.JsonConsumerAttributes),
+        nowTime: "@Html.Raw(ViewBag.Date)"
+    };
+    _headInitInfo.nowTime = _headInitInfo.nowTime.replace(new RegExp('-', 'g'),'/');
+</script>
+@this.Script("fame/highcharts.js", "flight/FltConsum.js", "commpub/pageID.js")
+</body>
+</html>

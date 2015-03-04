@@ -1,0 +1,135 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=4.0, user-scalable=yes" name="viewport">
+<title>Data Report of Ctrip Online</title>
+<!-- path -->
+@using Ctrip.Corp.Report.Utility;
+@{
+    string cssPath = (Enums.ResLangEnum.en.ToString().Equals(ViewBag.Lang, StringComparison.OrdinalIgnoreCase) ? "en" : "zh-cn");
+    @this.Css(cssPath + "/global.css", this.Request.UserAgent.ToLower().Contains("ipad") ? cssPath + "/global_pad.css" : "")
+}
+<script type="text/javascript">
+    //国际化静态资源数据
+    var corpReport_Common = @Html.Raw(ViewBag.Common);
+    var corpReport_NoUseTickets = @Html.Raw(ViewBag.Model["jsData"]);
+    //
+    var DownloadAnysisUrl = '@Url.Action("NoUseTicketsDownload", "Flight")';
+</script>
+<style type="text/css">.inputSel {color:#999;}</style>
+</head>
+
+<body>
+<div class="clearfix header">
+</div>
+<div class="view_wrap"><div class="clearfix container">
+<div class="sub_nav">
+	<div class="sub_logo">
+		<i class="icon i4">&times;</i>
+	</div>
+</div>
+ @using (Html.BeginForm("NoUseTicketsDownload", "Flight", FormMethod.Post, new { id = "queryForm" }))
+{ 
+@:<div class="main_cnt clearfix">
+    <div class="filter_bar">
+        <div class="menu_ico"></div>
+        <div class="filter_option option1">
+	        <label>@ViewBag.Model["lbl_PrimaryAccount"]</label>
+	        <span id="accountSpan">
+		        @ViewBag.Model["lbl_None"]
+		        <i class="icon i5"></i>
+	        </span>
+	        <div class="option_box y_scroll main_id hidepop" style="display:none;" id="accountInfo">
+	        </div>
+        </div>
+        <div class="filter_option text">
+	        <label>@ViewBag.Model["lbl_UID"]</label>
+	        <input type="text" id="CardNo" name="CardNo" >
+        </div>
+        <div class="filter_option text">
+	        <label>@ViewBag.Model["lbl_Itineraries"]</label>
+	        <input type="text" id="Trip" name="Trip" >
+        </div>
+        <div class="filter_option text">
+	        <label>@ViewBag.Model["lbl_Passenger"]</label>
+	        <input type="text" id="Psger" name="Psger" >
+        </div>
+        <div class="filter_option option4">
+	        <label>@ViewBag.Model["lbl_TicketStatus"]</label>
+	        <span dInfo="0" id="ticketSpan">
+		        @ViewBag.Model["lbl_All"]
+		        <i class="icon i5"></i>
+	        </span>
+	        <div class="option_box hidepop" style="display:none;" id="ticketInfo">
+		        <ul>
+			        <li>
+				        <a href="javascript:;" title="@ViewBag.Model["lbl_All"]" dInfo="0">@ViewBag.Model["lbl_All"]</a>
+			        </li>
+			        <li>
+				        <a href="javascript:;" title="@ViewBag.Model["lbl_WillExpire"]" dInfo="1">@ViewBag.Model["lbl_WillExpire"]</a>
+			        </li>
+			        <li>
+				        <a href="javascript:;" title="@ViewBag.Model["lbl_ExpiredOneYear"]" dInfo="2">@ViewBag.Model["lbl_ExpiredOneYear"]</a>
+			        </li>
+		        </ul>
+	        </div>
+        </div>
+        <div class="filter_option option4">
+	        <label>@ViewBag.Model["lbl_TicketTime"]</label>
+            <span class=""><input style="width: 90px;" type="text" id="StartTime" name="StartTime" /></span>
+	        <span class="time_connector"> - </span>
+            <span class=""><input style="width: 90px;" type="text" id="EndTime" name="EndTime" /></span>
+        </div>
+        <div class="filter_search">
+	        <a href="javascript:;" id="btnSearch"><i class="icon i21"></i>@ViewBag.Model["btn_Search"]</a>
+        </div>
+    </div>
+
+    <div class="fp fp2 fp11">
+        <div class="M-table" id="fltTicket"></div>
+        <div class="remark" id="reMk">
+            <p class="m-r"></p>
+		    <div class="down_data">
+			    <a id="download" href="javascript:void(0);"><i class="icon i14"></i>@ViewBag.Model["btn_Download"]</a>
+		    </div>
+		    <p>@ViewBag.Model["lbl_Bz"]</p>
+		    <p>@ViewBag.Model["lbl_Bz1"]</p>
+            <p>@ViewBag.Model["lbl_Bz2"]</p>
+	    </div>
+    </div>
+@:</div>
+}
+
+</div><input type="hidden" id="page_id" value="280001"/></div>
+
+<div class="footer">
+</div>
+<div class="no_data" id="noDataID" style="display:none"><img src="http://pic.ctrip.com/droco/img/loading.gif" alt=""></div>
+
+@this.Script("fame/jquery-1.9.1.min.js","commpub/common.js", "commpub/header.js", "fame/droco.js")
+<script type="text/javascript">
+    var lanType = "@Html.Raw(ViewBag.Lang)";
+	//配置文件信息
+    var _cfgInfo = @Html.Raw(ViewBag.Config);
+    //头部选中条件
+    var _headSelectInfo = CM.hashAny(window.location.hash);
+	//头部搜索条件
+	var _headInitInfo = {
+	    masterAccountInfo: @Html.Raw(ViewBag.JsonAccountIDs),
+        departmentInfo: @Html.Raw(ViewBag.JsonPartInfo),
+        consumerAttrInfo: @Html.Raw(ViewBag.JsonConsumerAttributes),
+        nowTime: "@Html.Raw(ViewBag.Date)"
+    };
+    _headInitInfo.nowTime = _headInitInfo.nowTime.replace(new RegExp('-', 'g'),'/');
+</script>
+<script type="text/javascript" src="http://webresource.ctrip.com/code/cquery/cQuery_110421.js">{"namespace" : "cQuery"}</script>
+@this.Script("fame/modules.js", "commpub/CUIControl.js", "flight/FltNoUseTicket.js", "commpub/pageID.js")
+</body>
+</html>

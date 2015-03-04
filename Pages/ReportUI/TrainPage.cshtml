@@ -1,0 +1,100 @@
+﻿@{
+    Layout = null;
+}
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=4.0, user-scalable=yes" name="viewport">
+<title>Data Report of Ctrip Online</title>
+<!-- path -->
+@using Ctrip.Corp.Report.Utility;
+@{
+    string cssPath = (Enums.ResLangEnum.en.ToString().Equals(ViewBag.Lang, StringComparison.OrdinalIgnoreCase) ? "en" : "zh-cn");
+    @this.Css(cssPath + "/global.css", this.Request.UserAgent.ToLower().Contains("ipad") ? cssPath + "/global_pad.css" : "")
+}
+<script type="text/javascript">
+    //国际化静态资源数据
+    var corpReport_Common = @Html.Raw(ViewBag.Common);
+    var corpReport_TrainPage = @Html.Raw(ViewBag.Model["jsData"]);
+</script>
+</head>
+
+<body>
+<div class="clearfix header">
+</div>
+<div class="view_wrap"><div class="clearfix container">
+<div class="main_cnt full">
+	<div class="filter_bar filter_bar_nomenu">
+        <div class="menu_ico"></div>
+	</div>
+    <div class="clearfix tp tp1">
+		<div class="box box1 br2px bb2px">
+			<i class="icon i24"></i>
+			<p><span id="trainConsumPID"></span>@ViewBag.Model["lbl_TrainExpenses"]</p>
+			<p><span id="trainAvgPID"></span>@ViewBag.Model["lbl_AvgTicketPrice"]</p>
+		</div>
+		<div class="box box2 bb2px">
+			<h3>
+				@ViewBag.Model["lbl_Expenses"]
+				<span id="trainConsumSelID"></span>
+			</h3>
+			<div class="" id="trainConsumID" style="height:100px">
+			</div>
+		</div>
+		<div class="box box3 br2px bb2px">
+			<h3>@ViewBag.Model["lbl_Top5Dept"]</h3>
+			<div class="" id="fivDepartConID" style="height:385px">
+			</div>
+		</div>
+		<div class="box box4 bb2px">
+			<h3>@ViewBag.Model["lbl_Top5Dest"]</h3>
+			<div class="" id="fivDesConID" style="height:385px">
+			</div>
+			<i class="white_block"></i>
+		</div>
+		<div class="box box5 br2px">
+			<h3>
+				@ViewBag.Model["lbl_TicketRate"]
+				<span id="ticketRateSelID">
+					<label><input type="radio" name="option2" checked="checked" value="0">@ViewBag.Model["lbl_TicketType"]</label>
+					<label><input type="radio" name="option2" value="1">@ViewBag.Model["lbl_SeatType"]</label>
+				</span>
+			</h3>
+			<div class="" id="ticketRateID" style="height:280px">
+			</div>
+		</div>
+        <div class="box box6">
+            <h3>@ViewBag.Model["lbl_Top5Trip"]</h3>
+            <div class="M-table" id="trianTopTripID"></div>
+        </div>
+    </div>
+
+</div>
+</div><input type="hidden" id="page_id" value="280003"/></div>
+
+<div class="footer">
+</div>
+<div class="no_data" id="noDataID" style="display:none"><img src="http://pic.ctrip.com/droco/img/loading.gif" alt=""></div>
+
+@this.Script("fame/jquery-1.9.1.min.js","commpub/common.js", "commpub/header.js", "fame/droco.js")
+<script type="text/javascript">
+    var lanType = "@Html.Raw(ViewBag.Lang)";
+	//配置文件信息
+    var _cfgInfo = @Html.Raw(ViewBag.Config);	
+	//头部选中条件
+	var _headSelectInfo = CM.hashAny(window.location.hash);		
+	//头部搜索条件
+	var _headInitInfo = {
+	    masterAccountInfo: @Html.Raw(ViewBag.JsonAccountIDs),
+        departmentInfo: @Html.Raw(ViewBag.JsonPartInfo),
+        consumerAttrInfo: @Html.Raw(ViewBag.JsonConsumerAttributes),
+        nowTime: "@Html.Raw(ViewBag.Date)"
+    };
+    _headInitInfo.nowTime = _headInitInfo.nowTime.replace(new RegExp('-', 'g'),'/');
+</script>
+@this.Script("fame/highcharts.js", "train/TrainConsum.js", "commpub/pageID.js")
+</body>
+</html>

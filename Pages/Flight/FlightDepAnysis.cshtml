@@ -1,0 +1,104 @@
+﻿@{
+    Layout = null;
+}
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=4.0, user-scalable=yes" name="viewport">
+<title>Data Report of Ctrip Online</title>
+<!-- path -->
+@using Ctrip.Corp.Report.Utility;
+@{
+    string cssPath = (Enums.ResLangEnum.en.ToString().Equals(ViewBag.Lang, StringComparison.OrdinalIgnoreCase) ? "en" : "zh-cn");
+    @this.Css(cssPath + "/global.css", this.Request.UserAgent.ToLower().Contains("ipad") ? cssPath + "/global_pad.css" : "")
+}
+<script type="text/javascript">
+    //国际化静态资源数据
+    var corpReport_Common = @Html.Raw(ViewBag.Common);
+    var corpReport_FlightDepAnysis = @Html.Raw(ViewBag.Model["jsData"]);
+</script>
+</head>
+
+<body>
+<div class="clearfix header">
+</div>
+<div class="view_wrap"><div class="clearfix container">
+<div class="sub_nav">
+	<div class="sub_logo">
+		<i class="icon i4">&times;</i>
+	</div>
+</div>
+<div class="main_cnt clearfix">
+	<div class="filter_bar">
+        <div class="menu_ico"></div>
+	</div>
+	<div class="fp fp2">
+        <div class="options">
+		    <h3>
+			    <span id="fltSelID"><input type="radio" style="visibility:hidden"></span>
+		    </h3>
+            <div class="filter_option type1 option1" id="depTxt">
+			    <label>@ViewBag.Model["lbl_Department"]</label>
+                <input type="text" placeholder="@ViewBag.Model["lbl_DepartNotice"]" class="" id="depNameID"/>
+			    <div class="option_box hidepop" id="depNameSelID" style="display:none">
+			    </div>
+		    </div>
+        </div>
+        <div class="M-table" id="ptAnysisID">
+			<table>
+				<thead>
+					<tr>
+					</tr>
+				</thead>
+			</table>
+			<div class="tbody">
+				<table>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+        </div>
+		<div class="remark">
+			<p>@ViewBag.Model["msg_Bz"]</p>
+			<p>@ViewBag.Model["msg_Bz1"]</p>
+			<p>@ViewBag.Model["msg_Bz2"]</p>
+			<p>@ViewBag.Model["msg_Bz3"]</p>
+			<p>@ViewBag.Model["msg_Bz4"]</p>
+			<p>@ViewBag.Model["msg_Bz5"]</p>
+		</div>
+	</div>
+</div>
+</div><input type="hidden" id="page_id" value="109205"/></div>
+
+<div class="footer"></div>
+<!-- depName T Start -->
+<div class="fp2_contrast_ly" id="depNameT" style="display:none">
+	<table id="depTMask">
+	</table>
+	<i class="i_close"  id="depTClose"></i>
+</div>
+<!-- depName T End-->
+<div class="no_data" id="noDataID" style="display:none"><img src="http://pic.ctrip.com/droco/img/loading.gif" alt=""></div>
+
+@this.Script("fame/jquery-1.9.1.min.js","commpub/common.js", "commpub/header.js", "fame/droco.js")
+<script type="text/javascript">
+    //语言环境
+    var lanType = "@Html.Raw(ViewBag.Lang)";
+	//配置文件信息
+    var _cfgInfo = @Html.Raw(ViewBag.Config);
+    //头部选中条件
+    var _headSelectInfo = CM.hashAny(window.location.hash);
+	//头部搜索条件
+	var _headInitInfo = {
+	    masterAccountInfo: @Html.Raw(ViewBag.JsonAccountIDs),
+        departmentInfo: @Html.Raw(ViewBag.JsonPartInfo),
+        consumerAttrInfo: @Html.Raw(ViewBag.JsonConsumerAttributes),
+        nowTime: "@Html.Raw(ViewBag.Date)"
+    };
+    _headInitInfo.nowTime = _headInitInfo.nowTime.replace(new RegExp('-', 'g'),'/');
+</script>
+@this.Script("fame/highcharts.js", "flight/FltDepAny.js", "commpub/pageID.js")
+</body>
+</html>

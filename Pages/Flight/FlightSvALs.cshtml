@@ -1,0 +1,110 @@
+﻿@{
+    Layout = null;
+}
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=4.0, user-scalable=yes" name="viewport">
+<title>Data Report of Ctrip Online</title>
+<!-- path -->
+@using Ctrip.Corp.Report.Utility;
+@{
+    string cssPath = (Enums.ResLangEnum.en.ToString().Equals(ViewBag.Lang, StringComparison.OrdinalIgnoreCase) ? "en" : "zh-cn");
+    @this.Css(cssPath + "/global.css", this.Request.UserAgent.ToLower().Contains("ipad") ? cssPath + "/global_pad.css" : "")
+}
+<script type="text/javascript">
+    //国际化静态资源数据
+    var corpReport_Common = @Html.Raw(ViewBag.Common);
+    var corpReport_FlightSvALs = @Html.Raw(ViewBag.Model["jsData"]);
+</script>
+</head>
+
+<body>
+<div class="clearfix header">
+</div>
+<div class="view_wrap"><div class="clearfix container">
+<div class="sub_nav">
+	<div class="sub_logo">
+		<i class="icon i4">&times;</i>
+	</div>
+</div>
+<div class="main_cnt clearfix">
+	<div class="filter_bar">
+        <div class="menu_ico"></div>
+	</div>
+	<div class="fp fp8">
+		<div class="box box1 bb2px" id="fltSvExID">
+			<h3>
+				@ViewBag.Model["lbl_Savings"]
+				<span id="fltSvLsSelID">
+				</span>
+			</h3>
+			<div class="" id="fltSvLsID" style="height:240px">
+			</div>
+		</div>
+		<div class="box box2 br2px" id="fltConStruExID">
+			<h3>
+				<span id="fltSvRID">
+					<label><input type="radio" name="option1" value="C" checked>@ViewBag.Model["lbl_ExpensesAnalysis"]</label>
+					<label><input type="radio" name="option1" value="S">@ViewBag.Model["lbl_SavingsAnalysis"]</label>
+				</span>
+                <div class="filter_option option1">
+				    <span id="fltSvSpanID">@ViewBag.Model["lbl_Null"]<i class="icon i5"></i></span>
+				    <div class="option_box hidepop" style="display:none" id="fltConStruSelID">
+				    </div>
+				</div>
+			</h3>
+			<div class="float_cap_wrap" id="fltConStruID" style="height:235px">
+			</div>
+			<div class="remark" id="fltSvRemarkID">
+				<p>@ViewBag.Model["msg_Bz"]</p>
+				<p>@ViewBag.Model["msg_Bz1"]</p>
+                <p>@ViewBag.Model["msg_Bz2"]</p>
+                <p>@ViewBag.Model["msg_Bz3"]</p>
+			</div>
+		</div>
+		<div class="box box3" id="depAnsExID">
+			<h3>@ViewBag.Model["lbl_MissedSavingsByDept"]</h3>
+			<div class="options">
+				<h3>
+					<span id="depAnsSelID">
+					</span>
+				</h3>
+				<div class="filter_option option1">
+					<label>@ViewBag.Model["lbl_Department"]</label>
+                    <input type="text" class="" id="depNameID" placeholder="@ViewBag.Model["lbl_DepartNotice"]">
+					<div class="option_box hidepop" id="depNameSelID" style="display:none">
+					</div>
+				</div>
+			</div>
+            <div class="M-table type1" id="fltLsDetail"></div>
+		</div>
+	</div>
+</div>
+</div><input type="hidden" id="page_id" value="109211"/></div>
+<div class="footer">
+</div>
+<div class="no_data" id="noDataID" style="display:none"><img src="http://pic.ctrip.com/droco/img/loading.gif" alt=""></div>
+
+@this.Script("fame/jquery-1.9.1.min.js","commpub/common.js", "commpub/header.js", "fame/droco.js")
+<script type="text/javascript">
+    var lanType = "@Html.Raw(ViewBag.Lang)";
+	//头部选中条件
+	var _headSelectInfo = CM.hashAny(window.location.hash);
+	//配置文件信息
+    var _cfgInfo = @Html.Raw(ViewBag.Config);			
+	//头部搜索条件
+	var _headInitInfo = {
+	    masterAccountInfo: @Html.Raw(ViewBag.JsonAccountIDs),
+        departmentInfo: @Html.Raw(ViewBag.JsonPartInfo),
+        consumerAttrInfo: @Html.Raw(ViewBag.JsonConsumerAttributes),
+        nowTime: "@Html.Raw(ViewBag.Date)"
+    };
+    _headInitInfo.nowTime = _headInitInfo.nowTime.replace(new RegExp('-', 'g'),'/');
+</script>
+@this.Script("fame/highcharts.js", "fame/highcharts-more.js", "flight/FltSvALs.js", "commpub/pageID.js")
+</body>
+</html>

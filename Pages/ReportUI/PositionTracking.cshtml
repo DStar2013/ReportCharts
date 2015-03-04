@@ -1,0 +1,106 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=4.0, user-scalable=yes" name="viewport">
+<title>Data Report of Ctrip Online</title>
+<!-- path -->
+@using Ctrip.Corp.Report.Utility;
+@{
+    string cssPath = (Enums.ResLangEnum.en.ToString().Equals(ViewBag.Lang, StringComparison.OrdinalIgnoreCase) ? "en" : "zh-cn");
+    @this.Css(cssPath + "/global.css", this.Request.UserAgent.ToLower().Contains("ipad") ? cssPath + "/global_pad.css" : "")
+}
+<script type="text/javascript">
+    //国际化静态资源数据
+    var corpReport_Common = @Html.Raw(ViewBag.Common);
+    var corpReport_Pos = @Html.Raw(ViewBag.Model["jsData"]);
+</script>
+</head>
+<style type="text/css">.inputSel {color:#999;}</style>
+<body>
+<div class="clearfix header">
+</div>
+<div class="view_wrap"><div class="clearfix container" id="container">
+<div class="clearfix main_cnt full trp">
+   <div class="main_map" style="z-index:1">
+        <div id="iCenter"></div>
+		<div class="show_box" id="tipID" style="position:absolute; display:none; z-index:110;">
+			<dl>
+                <dt id="tipName"></dt>
+				<dd id="tipNum" class="num"></dd>
+				<dd><a id="tipDetail" href="javascript:void(0)">@ViewBag.Model["lbl_CheckDetails"]</a></dd>
+				<dd class="no"><a id="tipDownLoad" href="javascript:void(0)">@ViewBag.Model["lbl_Download"]</a></dd>
+			</dl>
+		</div>
+   </div>
+    <div class="sub_filter">
+    	<div class="filter_bar">
+    		<div class="filter_option text">
+    			<label>@ViewBag.Model["lbl_City"]</label>
+                <div id="cityItem">
+    			    <div class="txts">
+    				    <input type="text" id="city_0" value="" placeholder="@ViewBag.Model["lbl_CityNotice"]"/>
+                        <input type="hidden" id="hidCity_0" value="" />
+    			    </div>
+                </div>
+    			<div class="txts"><a href="javascript:void(0)" id="addCity" class="add"><i class="i_x"></i>@ViewBag.Model["lbl_AddCity"]<b>(@ViewBag.Model["lbl_UpTen"])</b></a></div>
+    		</div>
+    		<div class="filter_option option4 text">
+    			<label>@ViewBag.Model["lbl_Deadline"]</label>
+                <div class="txts">
+					<input type="text" id="StartTime" name="StartTime">
+				</div>
+    		</div>
+    		<div id="chsCheck" class="check">
+    			<label><input id="M" checked type="checkbox"> @ViewBag.Model["lbl_Possible"]</label>
+    			<label><input id="W" checked type="checkbox"> @ViewBag.Model["lbl_Will"]</label>
+    			<label><input id="H" checked type="checkbox"> @ViewBag.Model["lbl_Been"]</label>
+    		</div>
+    		<div class="filter_search">
+    			<a href="javascript:void(0)" id="btn_search"><i class="icon i21"></i>@ViewBag.Model["lbl_Search"]</a>
+    			<a href="javascript:void(0)" id="btn_download"><i class="icon i14"></i>@ViewBag.Model["lbl_Download"]</a>
+    		</div>
+    	</div>
+    </div>
+    <form method="post" id="posDetail" target="_blank" style="display:none">
+        <input type="hidden" id="H_CityID" name="H_CityID" value="" />
+        <input type="hidden" id="H_AcountID" name="H_AcountID" value="" />
+        <input type="hidden" id="H_AcountName" name="H_AcountName" value="" />
+        <input type="hidden" id="H_EndDate" name="H_EndDate" value="" />
+        <input type="hidden" id="H_DesireTrend" name="H_DesireTrend" value="" />
+    </form>
+</div>
+</div><input type="hidden" id="page_id" value="280002"/></div>
+
+<div class="footer">
+</div>
+<div class="no_data" id="noDataID" style="display:none"><img src="http://pic.ctrip.com/droco/img/loading.gif" alt=""></div>
+
+@this.Script("fame/jquery-1.9.1.min.js","commpub/common.js", "commpub/header.js", "fame/droco.js")
+<!--地图-->
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.2&key=0e9680eed7f5ffc60a7b02167d0182a3"></script>
+<script type="text/javascript">
+    var lanType = "@Html.Raw(ViewBag.Lang)";
+	//配置文件信息
+    var _cfgInfo = @Html.Raw(ViewBag.Config);
+    //头部选中条件
+    var _headSelectInfo = CM.hashAny(window.location.hash);
+	//头部搜索条件
+	var _headInitInfo = {
+	    masterAccountInfo: @Html.Raw(ViewBag.JsonAccountIDs),
+        departmentInfo: @Html.Raw(ViewBag.JsonPartInfo),
+        consumerAttrInfo: @Html.Raw(ViewBag.JsonConsumerAttributes),
+        nowTime: "@Html.Raw(ViewBag.Date)"
+    };
+    _headInitInfo.nowTime = _headInitInfo.nowTime.replace(new RegExp('-', 'g'),'/');
+</script>
+<script type="text/javascript" src="http://webresource.ctrip.com/code/cquery/cQuery_110421.js">{"namespace" : "cQuery"}</script>
+@this.Script("fame/modules.js", "commpub/CUIControl.js", "position/PosTrack.js", "commpub/pageID.js")
+</body>
+</html>

@@ -1,0 +1,123 @@
+﻿@{
+    Layout = null;
+}
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=4.0, user-scalable=yes" name="viewport">
+<title>Data Report of Ctrip Online</title>
+<!-- path -->
+@using Ctrip.Corp.Report.Utility;
+@{
+    string cssPath = (Enums.ResLangEnum.en.ToString().Equals(ViewBag.Lang, StringComparison.OrdinalIgnoreCase) ? "en" : "zh-cn");
+    @this.Css(cssPath + "/global.css", this.Request.UserAgent.ToLower().Contains("ipad") ? cssPath + "/global_pad.css" : "")
+}
+<script type="text/javascript">
+    //国际化静态资源数据
+    var corpReport_Common = @Html.Raw(ViewBag.Common);
+    var corpReport_FlightPsgerAnysis = @Html.Raw(ViewBag.Model["jsData"]);
+    //
+    var DownloadPsgerAnysisUrl = '@Url.Action("FlightPsgerDownload", "Flight")';
+</script>
+</head>
+
+<body>
+<div class="clearfix header">
+</div>
+<div class="view_wrap"><div class="clearfix container">
+<div class="sub_nav">
+	<div class="sub_logo">
+		<i class="icon i4">&times;</i>
+	</div>
+</div>
+<div class="main_cnt clearfix">
+	<div class="filter_bar">
+        <div class="menu_ico"></div>
+	</div>
+	<div class="fp fp2 fp3">
+
+    @using (Html.BeginForm("FlightPsgerDownload", "ReportUI", FormMethod.Post, new { id = "queryPsgerForm" }))
+    { 
+        @:<div class="options" id="fltInFID">
+			<h3>
+				<span id="fltPSelID">
+				</span>
+			</h3>
+			<div class="filter_option option1" id="contBossID">
+				<label>@ViewBag.Model["lbl_Includeboss"]</label>
+				<span mark='0'>
+					@ViewBag.Model["lbl_Yes"]
+					<i class="icon i5"></i>
+				</span>
+                <div class="option_box hidepop" style="display:none">
+                    <ul>
+                    <li><a href="javascript:;" mark='0'>@ViewBag.Model["lbl_Yes"]</a></li>
+                    <li><a href="javascript:;" mark='1'>@ViewBag.Model["lbl_No"]</a></li>
+                    </ul>
+                </div>
+			</div>
+            <div class="filter_option option1 txt1">
+				<label>@ViewBag.Model["lbl_Dep"]</label>
+				<input type="text" placeholder="@ViewBag.Model["lbl_DepartNotice"]" value="" id="depName">
+			</div>
+            <div class="filter_option option1 txt2">
+				<label>@ViewBag.Model["lbl_Pass"]</label>
+				<input type="text" placeholder="@ViewBag.Model["lbl_PassengerNotice"]" value="" id="psgerName">
+			</div>
+            @:<div class="down_data" id="dwPsgID">
+                @:<a id="psgerdown" href="javascript:void(0);"><i class="icon i14"></i>@ViewBag.Model["btn_DownloadData"]</a>
+            @:</div>
+		@:</div>
+    }
+        <div class="M-table" id="fltPsgAisID" style="height:495px">
+			<table>
+				<thead>
+					<tr>
+					</tr>
+				</thead>
+			</table>
+			<div class="tbody">
+				<table>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+        </div>
+		<div class="remark">
+			<p>@ViewBag.Model["msg_Bz"]</p>
+			<p>@ViewBag.Model["msg_Bz1"]</p>
+			<p>@ViewBag.Model["msg_Bz2"]</p>
+			<p>@ViewBag.Model["msg_Bz3"]</p>
+			<p>@ViewBag.Model["msg_Bz4"]</p>
+			<p>@ViewBag.Model["msg_Bz5"]</p>
+		</div>
+	</div>
+</div>
+</div><input type="hidden" id="page_id" value="109206"/></div>
+
+<div class="footer">
+</div>
+<div class="no_data" id="noDataID" style="display:none"><img src="http://pic.ctrip.com/droco/img/loading.gif" alt=""></div>
+
+@this.Script("fame/jquery-1.9.1.min.js","commpub/common.js", "commpub/header.js", "fame/droco.js")
+<script type="text/javascript">
+    var lanType = "@Html.Raw(ViewBag.Lang)";
+	//头部选中条件
+	var _headSelectInfo = CM.hashAny(window.location.hash);
+	//配置文件信息
+    var _cfgInfo = @Html.Raw(ViewBag.Config);
+	//头部搜索条件
+	var _headInitInfo = {
+	    masterAccountInfo: @Html.Raw(ViewBag.JsonAccountIDs),
+        departmentInfo: @Html.Raw(ViewBag.JsonPartInfo),
+        consumerAttrInfo: @Html.Raw(ViewBag.JsonConsumerAttributes),
+        nowTime: "@Html.Raw(ViewBag.Date)"
+    };
+    _headInitInfo.nowTime = _headInitInfo.nowTime.replace(new RegExp('-', 'g'),'/');
+</script>
+@this.Script("fame/highcharts.js", "flight/FltPsgerAny.js", "commpub/pageID.js")
+</body>
+</html>

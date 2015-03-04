@@ -1,0 +1,70 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=4.0, user-scalable=yes" name="viewport">
+<title>Data Report of Ctrip Online</title>
+<!-- path -->
+@using Ctrip.Corp.Report.Utility;
+@{
+    string cssPath = (Enums.ResLangEnum.en.ToString().Equals(ViewBag.Lang, StringComparison.OrdinalIgnoreCase) ? "en" : "zh-cn");
+    @this.Css(cssPath + "/global.css", this.Request.UserAgent.ToLower().Contains("ipad") ? cssPath + "/global_pad.css" : "")
+}
+<script type="text/javascript">
+    //国际化静态资源数据
+    var corpReport_Common = @Html.Raw(ViewBag.Common);
+    var corpReport_PosDetails = @Html.Raw(ViewBag.Model["jsData"]);
+</script>
+</head>
+
+<body>
+<div class="clearfix header">
+</div>
+<div class="view_wrap"><div class="clearfix container">
+<div class="clearfix main_cnt full trp_table">
+	<div class="filter_bar filter_bar_nomenu">
+		<div class="filter_option text">
+			<label>@ViewBag.Model["lbl_OrderNO"]</label>
+			<input type="text" id="orderNO" placeholder="@ViewBag.Model["lbl_InputOrderNo"]" value="">
+		</div>
+		<div class="filter_option text">
+			<label>@ViewBag.Model["lbl_Passenger"]</label>
+			<input type="text" id="psgerName" placeholder="@ViewBag.Model["lbl_InputPass"]" value="">
+		</div>
+	</div>
+
+    <div class="M-table" id="posDetailT"></div>
+</div>
+</div><input type="hidden" id="page_id" value="280004"/></div>
+
+<div class="footer">
+</div>
+<div class="no_data" id="noDataID" style="display:none"><img src="http://pic.ctrip.com/droco/img/loading.gif" alt=""></div>
+
+@this.Script("fame/jquery-1.9.1.min.js","commpub/common.js", "commpub/header.js", "fame/droco.js")
+<script type="text/javascript">
+    var lanType = "@Html.Raw(ViewBag.Lang)";
+	//配置文件信息
+    var _cfgInfo = @Html.Raw(ViewBag.Config);
+    //头部选中条件
+    var _headSelectInfo = CM.hashAny(window.location.hash);
+	//头部搜索条件
+	var _headInitInfo = {
+	    masterAccountInfo: @Html.Raw(ViewBag.JsonAccountIDs),
+        departmentInfo: @Html.Raw(ViewBag.JsonPartInfo),
+        consumerAttrInfo: @Html.Raw(ViewBag.JsonConsumerAttributes),
+        nowTime: "@Html.Raw(ViewBag.Date)"
+    };
+    _headInitInfo.nowTime = _headInitInfo.nowTime.replace(new RegExp('-', 'g'),'/');
+    //Post Data
+    var pQData = @Html.Raw(ViewBag.PDQueryModels);
+</script>
+@this.Script("position/PosDetail.js", "commpub/pageID.js")
+</body>
+</html>

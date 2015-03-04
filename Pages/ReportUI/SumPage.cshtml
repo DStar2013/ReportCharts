@@ -1,0 +1,127 @@
+﻿@{
+    Layout = null;
+}
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=4.0, user-scalable=yes" name="viewport">
+<title>Data Report of Ctrip Online</title>
+<!-- path -->
+@using Ctrip.Corp.Report.Utility;
+@{
+    string cssPath = (Enums.ResLangEnum.en.ToString().Equals(ViewBag.Lang, StringComparison.OrdinalIgnoreCase) ? "en" : "zh-cn");
+    @this.Css(cssPath + "/global.css", this.Request.UserAgent.ToLower().Contains("ipad") ? cssPath + "/global_pad.css" : "")
+}
+<script type="text/javascript">
+    //国际化静态资源数据
+    var corpReport_Common = @Html.Raw(ViewBag.Common);
+    var corpReport_SumPage = @Html.Raw(ViewBag.Model["jsData"]);
+</script>
+</head>
+
+<body>
+<div class="clearfix header">
+</div>
+<div class="view_wrap"><div class="clearfix container">
+<div class="main_cnt full">
+	<div class="filter_bar filter_bar_nomenu">
+	</div>
+	<div class="all_data">
+		<div class="box box1">
+			<div class="clearfix">
+                <i class="icon i26" id="warnIcon" style="display:none"></i>
+                <div class="tips_ly" id="warnLayer" style="display:none"></div>
+				<p><span id="allConsumPID"><em>@ViewBag.Model["lbl_RMBLogo"]</em></span>@ViewBag.Model["lbl_Totalexpenses"]</p>
+				<p><span id="allSavePID"><em>@ViewBag.Model["lbl_RMBLogo"]</em></span>@ViewBag.Model["lbl_Totalsavings"]</p>
+			</div>
+            <div class="col2box">
+			    <h3>
+				    <span id="allConsumSelID">
+				    </span>
+			    </h3>
+			    <div class="data1" id="allConsumMID" style="height:150px">
+			    </div>
+            </div>
+            <div class="col2box col2box2">
+                <h3>@ViewBag.Model["lbl_Expenses"]</h3>
+			    <div class="data2" id="allConsumSID" style="height:185px">
+			    </div>
+            </div>
+		</div>
+        <div class="full_box box_right">
+			<div class="box box2">
+				<h3>@ViewBag.Model["lbl_TopDepartment"]</h3>
+				<div class="" id="fivDepartConID" style="height:350px">
+				</div>
+			</div>
+			<div class="box box3">
+				<h3>@ViewBag.Model["lbl_TopDestination"]</h3>
+				<div class="" id="fivDesConID" style="height:350px"> 
+				</div>
+			</div>
+		</div>
+        <div class="full_box bt2px box_btmleft">
+		    <div class="box box4 text br2px">
+			    <h3>
+				    @ViewBag.Model["lbl_Airfare"]
+				    <span id="allFlightSelID">
+				    </span>
+			    </h3>
+			    <div class="clearfix text1">
+				    <p><span id="fltConsumPID"></span>@ViewBag.Model["lbl_Totalexpenses"]</p>
+				    <p><span id="fltAvgPID"></span>@ViewBag.Model["lbl_AvgPrice"]</p>
+				    <p><span id="fltAvgDisPID"></span>@ViewBag.Model["lbl_AvgDiscount"]</p>
+			    </div>
+			    <div class="for_margin" id="fltConsumID" style="height:140px">
+			    </div>
+			    <h3>@ViewBag.Model["lbl_LeadTime"]</h3>
+			    <div class="clearfix text2" id="beBokID">
+			    </div>
+		    </div>
+		    <div class="box box5 text">
+			    <h3>
+				    @ViewBag.Model["lbl_Hotel"]
+				    <span id="allHotelSelID">
+				    </span>
+			    </h3>
+			    <div class="clearfix text1">
+				    <p><span id="htlConsumPID"></span>@ViewBag.Model["lbl_Totalexpenses"]</p>
+				    <p><span id="htlAvgPID"></span>@ViewBag.Model["lbl_AvgDailyRate"]</p>
+			    </div>
+			    <div class="for_margin" id="hotelConsumID" style="height:140px">
+			    </div>
+			    <h3>@ViewBag.Model["lbl_StarRating"]</h3>
+			    <div class="clearfix text2" id="htStarID">
+			    </div>
+		    </div>
+        </div>
+	</div>
+</div>
+</div><input type="hidden" id="page_id" value="109203"/></div>
+
+<div class="footer">
+</div>
+<div class="no_data" id="noDataID" style="display:none"><img src="http://pic.ctrip.com/droco/img/loading.gif" alt=""></div>
+
+@this.Script("fame/jquery-1.9.1.min.js","commpub/common.js", "commpub/header.js", "fame/droco.js")
+<script type="text/javascript">
+    //语言环境
+    var lanType = "@Html.Raw(ViewBag.Lang)";
+    //配置文件信息
+    var _cfgInfo = @Html.Raw(ViewBag.Config);
+	//头部选中条件
+	var _headSelectInfo = CM.hashAny(window.location.hash);
+	//头部搜索条件
+	var _headInitInfo = {
+	    masterAccountInfo: @Html.Raw(ViewBag.JsonAccountIDs),
+        departmentInfo: @Html.Raw(ViewBag.JsonPartInfo),
+        consumerAttrInfo: @Html.Raw(ViewBag.JsonConsumerAttributes),
+        nowTime: "@Html.Raw(ViewBag.Date)"
+    };
+    _headInitInfo.nowTime = _headInitInfo.nowTime.replace(new RegExp('-', 'g'),'/');
+</script>
+@this.Script("fame/highcharts.js", "InSum.js", "commpub/pageID.js")
+</body>
+</html>

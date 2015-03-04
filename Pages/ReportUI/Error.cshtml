@@ -1,0 +1,44 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=4.0, user-scalable=yes" name="viewport">
+<title>Data Report of Ctrip Online</title>
+<!-- path -->
+@using Ctrip.Corp.Report.Utility;
+@{
+    string cssPath = (Enums.ResLangEnum.en.ToString().Equals(ViewBag.Lang, StringComparison.OrdinalIgnoreCase) ? "en" : "zh-cn");
+    @this.Css(cssPath + "/global.css", this.Request.UserAgent.ToLower().Contains("ipad") ? cssPath + "/global_pad.css" : "")
+}
+<script type="text/javascript">
+    //国际化静态资源数据
+    var corpReport_Common = @Html.Raw(ViewBag.Common);
+</script>
+@this.Script("fame/jquery-1.9.1.min.js","commpub/common.js", "commpub/header.js", "fame/droco.js")
+</head>
+<body>
+<div class="view_wrap"><div class="clearfix container">
+<div class="main_cnt error_page">
+	<div class="error_404">
+		<p>@ViewBag.Model["lbl_ErrorInfo"]</p>
+		<dl>
+			<dt>@ViewBag.Model["lbl_ContinueView"]</dt>
+			<dd><a href="javascript:history.go(-1)">&gt;&gt;@ViewBag.Model["lbl_LastPage"]</a></dd>
+			<dd><a href="Start">&gt;&gt;@ViewBag.Model["lbl_HomePage"]</a></dd>
+		</dl>
+	</div>
+</div>
+</div></div>
+
+<div class="footer">
+	<script type="text/javascript">
+	    Droco_Funs && Droco_Funs.getFooter();
+	</script>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+﻿@{
+    Layout = null;
+}
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=4.0, user-scalable=yes" name="viewport">
+<title>Data Report of Ctrip Online</title>
+<!-- path -->
+@using Ctrip.Corp.Report.Utility;
+@{
+    string cssPath = (Enums.ResLangEnum.en.ToString().Equals(ViewBag.Lang, StringComparison.OrdinalIgnoreCase) ? "en" : "zh-cn");
+    @this.Css(cssPath + "/global.css", this.Request.UserAgent.ToLower().Contains("ipad") ? cssPath + "/global_pad.css" : "")
+}
+<script type="text/javascript">
+    //国际化静态资源数据
+    var corpReport_Common = @Html.Raw(ViewBag.Common);
+    var corpReport_FlightRoutes = @Html.Raw(ViewBag.Model["jsData"]);
+</script>
+</head>
+
+<body>
+<div class="clearfix header">
+</div>
+<div class="view_wrap"><div class="clearfix container">
+<div class="sub_nav">
+	<div class="sub_logo">
+		<i class="icon i4">&times;</i>
+	</div>
+</div>
+<div class="main_cnt clearfix">
+	<div class="filter_bar">
+        <div class="menu_ico"></div>
+	</div>
+	<div class="fp fp6">
+		<div class="full_box bb2px">
+			<div class="box box1">
+				<h3>
+					@ViewBag.Model["lbl_Top10Itineraries"]
+					<span id="tenRouteSelID">
+					</span>
+				</h3>
+				<div class="" id="tenRouteAsiID" style="height:320px">
+					<img src="http://pic.ctrip.com/droco/img/sample/pic.png" width="515" height="305" class="sample_pic" alt="" style="display:none">
+				</div>
+			</div>
+			<div class="box box2" id="potSvDivID">
+				<h3>
+					<span id="potSvSelID">
+						<label><input type="radio" name="option1" value='0' checked>@ViewBag.Model["lbl_PotentialSavings"]</label>
+						<label><input type="radio" name="option1" value='1'>@ViewBag.Model["lbl_PotentialSavingsPer"]</label>
+					</span>
+				</h3>
+                <div class="no_data" id="potSvNoDataID" style="line-height:304px;height:304px;display:none"><i class="icon i22"></i></div>
+				<ul id="potSvInfoID">
+				</ul>
+                <div id="potSvExID" style="display:none"></div>
+			</div>
+		</div>
+		<div class="box box3">
+            <div class="M-table type1" id="routeDetID">
+            </div>
+			<div class="remark">
+				<p>@ViewBag.Model["msg_Bz"]</p>
+				<p>@ViewBag.Model["msg_Bz1"]</p>
+				<p>@ViewBag.Model["msg_Bz2"]</p>
+				<p>@ViewBag.Model["msg_Bz3"]</p>
+				<p>@ViewBag.Model["msg_Bz4"]</p>
+				<p>@ViewBag.Model["msg_Bz5"]</p>
+			</div>
+		</div>
+	</div>
+</div>
+</div><input type="hidden" id="page_id" value="109209"/></div>
+
+<div class="footer">
+</div>
+<div class="no_data" id="noDataID" style="display:none"><img src="http://pic.ctrip.com/droco/img/loading.gif" alt=""></div>
+
+@this.Script("fame/jquery-1.9.1.min.js","commpub/common.js", "commpub/header.js", "fame/droco.js")
+<script type="text/javascript">
+    var lanType = "@Html.Raw(ViewBag.Lang)";
+	//头部选中条件
+	var _headSelectInfo = CM.hashAny(window.location.hash);
+	//配置文件信息
+    var _cfgInfo = @Html.Raw(ViewBag.Config);		
+	//头部搜索条件
+	var _headInitInfo = {
+	    masterAccountInfo: @Html.Raw(ViewBag.JsonAccountIDs),
+        departmentInfo: @Html.Raw(ViewBag.JsonPartInfo),
+        consumerAttrInfo: @Html.Raw(ViewBag.JsonConsumerAttributes),
+        nowTime: "@Html.Raw(ViewBag.Date)"
+    };
+    _headInitInfo.nowTime = _headInitInfo.nowTime.replace(new RegExp('-', 'g'),'/');
+</script>
+@this.Script("fame/highcharts.js", "flight/FltRoute.js", "commpub/pageID.js")
+</body>
+</html>

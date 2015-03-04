@@ -1,0 +1,95 @@
+﻿@{
+    Layout = null;
+}
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=4.0, user-scalable=yes" name="viewport">
+<title>Data Report of Ctrip Online</title>
+<!-- path -->
+@using Ctrip.Corp.Report.Utility;
+@{
+    string cssPath = (Enums.ResLangEnum.en.ToString().Equals(ViewBag.Lang, StringComparison.OrdinalIgnoreCase) ? "en" : "zh-cn");
+    @this.Css(cssPath + "/global.css", this.Request.UserAgent.ToLower().Contains("ipad") ? cssPath + "/global_pad.css" : "")
+}
+</head>
+<body>
+<div class="index"><div class="bg2 bg_pad"><div class="bg3 bg_pad"><div class="bg4 bg_pad">
+<div class="view_container">
+	<h1 class="logo">
+		<a href="javascript:void(0)" class="logo1" title="Ctrip - 携程"></a>
+		@if (!string.IsNullOrEmpty(ViewBag.CorpImage))
+         {
+		    <a href="javascript:void(0)" class="logo2" title="">
+                <img src="@ViewBag.CorpImage" alt="" width="95" height="41">
+		    </a>
+         }
+	</h1>
+	<h2 class="welcome"><span>欢迎使用</span>携程在线报告系统</h2>
+	<div class="enter">
+		<a href="@Url.Content("~/ReportUI/SumPage")" dLink="@Url.Content("~/ReportUI/SumPage")" class="link link1" id="chID"><i></i> 中文版</a>
+        <a href="@Url.Content("~/ReportUI/SumPage")" dLink="@Url.Content("~/ReportUI/SumPage")" class="not_first" id="enID"><i></i> ENGLISH</a>
+	</div>
+	<div class="footer">
+		<p>本报告数据来源于贵司在携程商旅的消费数据。</p>
+		<p>此报告的最终解释权归携程旅行网商旅数据中心所有，如有疑问请联系负责您公司的客户经理。</p>
+		<p>Copyright © 1999-2014, ctrip.com. All rights reserved.</p>
+        <input type="hidden" id="page_id" value="109202"/>
+	</div>
+</div>
+</div></div></div></div>
+
+@this.Script("fame/jquery-1.9.1.min.js", "commpub/common.js", "commpub/pageID.js")
+<script type="text/javascript">
+    (function () {
+        //
+        var _headInitInfo = {
+            masterAccountInfo: @Html.Raw(ViewBag.JsonAccountIDs),
+            departmentInfo: @Html.Raw(ViewBag.JsonPartInfo),
+            consumerAttrInfo: @Html.Raw(ViewBag.JsonConsumerAttributes),
+            nowTime: "@Html.Raw(ViewBag.Date)"
+        };
+
+        _headInitInfo.nowTime = _headInitInfo.nowTime.replace(new RegExp('-', 'g'), '/');
+
+        //初始化数据赋值
+        var stSelect = {};
+        stSelect.AccountIndex = 0;
+        stSelect.DepartIndex = 0;
+        stSelect.ConsumIndex = 0;
+
+        var _ntTime = new Date(_headInitInfo.nowTime),
+            _nYear = _ntTime.getFullYear(),
+            _nMonth = _ntTime.getMonth(),
+            _nDay = _ntTime.getDate();
+        //
+        if (_nDay > 5) {
+            if (_nMonth == 0) {
+                _nYear = _nYear - 1;
+                _nMonth = 12;
+            }
+        } else {
+            if (_nMonth == 0 || _nMonth == 1) {
+                _nYear = _nYear - 1;
+                _nMonth = 11 + _nMonth;
+            } else {
+                _nYear = _nYear;
+                _nMonth = _nMonth - 1;
+            }
+        }
+        stSelect.StartTime = _nYear + '/' + _nMonth + '/1';
+        stSelect.EndTime = _nYear + '/' + _nMonth + '/1';
+
+        //..
+        var _ch = $('#chID').attr('dLink') + '?lang=zh-cn#' + CM.getParam(stSelect),
+            _en = $('#enID').attr('dLink') + '?lang=en#' + CM.getParam(stSelect);
+        $('#chID').attr('href', _ch);
+        $('#enID').attr('href', _en);
+    })();
+</script>
+
+</body>
+</html>
