@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=4.0, user-scalable=yes"
+        name="viewport">
+    <title>Data Report of Ctrip Online</title>
+    <!-- path -->
+    <link href="../../CSS/pdf/data_report.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <!-- ☆☆ SumPage S ☆☆ -->
+    <div class="main-c">
+        <!-- 公共头 S -->
+        <div class="CT_header"></div>
+        <!-- 公共头 E -->
+        <div class="page-c">
+            <!-- 总概页标题 S -->
+            <div class="CT_SumPageTitle"></div>
+            <!-- 总概页标题 E -->
+            <div class="box-c2">
+                <div class="m-l">
+                    <div class="msg-box msg-info" id="sp_warnInfo"></div>
+                    <div class="total-bill">
+                        <div class="item">
+                            <div class="cost" id="sp_allConsumID"></div>
+                            <div class="desc">
+                                总体消费情况
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="cost cost-r" id="sp_allSaveID"></div>
+                            <div class="desc">
+                                总节省
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-r">
+                    <h3 class="mod-hd">消费金额</h3>
+                    <div class="visual-data" id="sp_allConsumSID" style="height:195px"></div>
+                </div>
+            </div>
+            <div class="mod">
+                <div class="visual-data mb30" id="sp_allConsumMID" style="height:170px"></div>
+                <div class="space" id="sp_allConsumTable"></div>
+            </div>
+            <div class="box-c3">
+                <div class="m-l">
+                    <div class="mod-hd">前五部门消费情况</div>
+                    <div class="visual-data" id="sp_fiveDepConsum" style="height:400px"></div>
+                </div>
+                <div class="m-r">
+                    <div class="mod-hd">前五目的地消费情况</div>
+                    <div class="visual-data" id="sp_fiveDesConsum" style="height:400px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-c">
+        <!-- 公共头 S -->
+        <div class="CT_header"></div>
+        <!-- 公共头 E -->
+        <div class="page-c">
+            <!-- 总概页标题 S -->
+            <div class="CT_SumPageTitle"></div>
+            <!-- 总概页标题 E -->
+            <div class="mod">
+                <div class="mod-hd">机票月度消费情况</div>
+                <div class="list">
+                    <div class="item"><div class="price" id="sp_fltConsum"></div>总体消费情况</div>
+                    <div class="item"><div class="price" id="sp_fltAvgPrice"></div>平均票价</div>
+                    <div class="item"><div class="price" id="sp_fltAvgDiscount"></div>平均折扣</div>
+                </div>
+                <div class="visual-data mb30" id="sp_flight" style="height:170px"></div>
+                <div class="space mb30" id="sp_flightTable"></div>
+                <div class="mod-hd">机票提前预订天数情况</div>
+                <div class="list" id="sp_flightList"></div>
+            </div>
+            <div class="mod-hd">酒店月度消费情况</div>
+            <div class="list">
+                <div class="item"><div class="price" id="sp_htlConsum"><span>¥</span>490,946</div>总体消费情况</div>
+                <div class="item"><div class="price" id="sp_htlAvgPrice"><span>¥</span>480</div>平均房价</div>
+            </div>
+            <div class="visual-data mb30" id="sp_hotel" style="height:170px"></div>
+            <div class="space mb30" id="sp_hotelTable"></div>
+            <div class="mod-hd">酒店星级使用情况</div>
+            <div class="list" id="sp_hotelList"></div>
+        </div>
+    </div>
+    <!-- ☆☆ SumPage E ☆☆ -->
+
+    <script type="text/javascript">
+        var PDFConfig = {
+            cfgInfo: {
+                HasAgrHotelProduct: "T",
+                HasMemHotelProduct:"T",
+                HasOutAirTicketProduct: "T",
+                HasInAirTicketProduct: "T",
+                HasTotalTop5: "T"
+            },
+            lanType: "zh-cn",
+            headInfo: {
+                AccountName: "全部",
+                DepartName: "技术研发中心",
+                ConsumAttr: "全部",
+                StartTime: "2014-01",
+                EndTime: "2014-10"
+            }
+        }
+
+        var PageInfo = {
+            SumPageInfo: {
+                SumInfo: {
+                    IsWarnShow: true,
+                    WarnInfo: "本期贵司差旅支出同比增长30%，环比增长90%<br>请关注贵司的差旅管控。",
+                    AllConsumption: 169111,
+                    AllSaving: 40719,
+                    TrainPrice: 1906,
+                    ArgHotelPrice: 99110,
+                    MemHotelPrice: 68342,
+                    DomFlightPrice: -247,
+                    InterFlightPrice: 0,
+                    TrainInfo: [{ Key: "1月", Value: 1906}, { Key: "2月", Value: 2001}],
+                    AgrHotelInfo: [{ Key: "1月", Value: 1906}, { Key: "2月", Value: 2001}],
+                    MemHotelInfo: [{ Key: "1月", Value: 1906}, { Key: "2月", Value: 201101}],
+                    DomFlightInfo: [{ Key: "1月", Value: 1906}, { Key: "2月", Value: 2001}],
+                    InteFlightInfo: [{ Key: "1月", Value: 1906}, { Key: "2月", Value: 2001}]
+                },
+                FiveDepConsumInfo: [{Key: "部门1", Value: 119091},{Key: "部门2", Value: 219091}],
+                FiveDesConsumInfo: [{Key: "北京", Value: 63515},{Key:"上海", Value: 28369}],
+                FlightInfo: {
+                    AllConsum: -247,
+                    AveDisCount: 0.9,
+                    AvgPrice: 1579,
+                    BeforeDiscount: [{Key: "0天", Value: "16.4%"},{Key: "1天",Value: "16.4%"}]
+                },
+                HotelInfo: {
+                    AllConsum: 167452,
+                    AvgPrice: 476,
+                    StarSit: [{Key: "1星", Value: "16.12%"},{Key: "2星",Value: "12.4%"}]
+                }
+            }
+        }
+    </script>
+    <!-- ☆☆ 模板 tmpl S ☆☆ -->
+    <script type="text/x-jquery-tmpl" id="headTmpl">
+        <div class="header">
+            <h1 class="hd-logo">
+                <a href="javascript:void(0)">Ctrip - 携程</a>
+            </h1>
+            <h2 class="hd-siteTitle">
+                携程在线数据报告 <em>Data Report of Ctrip Online</em>
+            </h2>
+            <ul class="hd-languageVersion">
+                <li><a href="javascript:void(0)" title="中文版" class="current">中文版</a></li>
+                <li><a href="javascript:void(0)" title="英文版">中文版</a></li>
+            </ul>
+            <ul class="hd-info">
+                <li><span class="label">主账户：</span>${AccountName}</li>
+                <li><span class="label">部门：</span>${DepartName}</li>
+                <li><span class="label">消费属性：</span>${ConsumAttr}</li>
+                <li><span class="label">时间范围：</span>${StartTime}至${EndTime}</li>
+            </ul>
+        </div>
+    </script>
+
+    <script type="text/x-jquery-tmpl" id="pageTitleTmpl">
+        <div class="page-title">
+            ${pTitle}<span class="sub sub-e">Overview</span>
+            <div class="tria-b">
+            </div>
+            <div class="tria-f">
+            </div>
+        </div>
+    </script>
+
+    <script type="text/x-jquery-tmpl" id="tableTmpl">
+        <table>
+            <thead><tr>
+                <th></th>
+                {{each(i, v) thead}}
+                    <th>${v}</th>
+                {{/each}}
+            </tr></thead>
+            <tbody>
+                {{each(i, v) tbody}}
+                    <tr>
+                        <td>${v.Key}</td>
+                        {{each(j, v_1) v.Value}}
+                            <td>${v_1}</td>
+                        {{/each}}
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </script>
+
+    <script type="text/x-jquery-tmpl" id="sp_listTmpl">
+        <div class="item item-samll">
+            ${Key}
+            <div class="text-c1">${Value}</div>
+        </div>
+    </script>
+
+    <!-- ☆☆ 模板 tmpl E ☆☆ -->
+    <script src="../../ReportJS/fame/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="../../ReportJS/commpub/common.js" type="text/javascript"></script>
+    <script src="../../ReportJS/fame/highcharts.js" type="text/javascript"></script>
+    <script src="../../ReportJS/fame/highcharts-more.js" type="text/javascript"></script>
+    <script src="../../ReportJS/fame/jquery.tmpl.min.js" type="text/javascript"></script>
+    <script src="../../ReportJS/pdf/main.js" type="text/javascript"></script>
+</body>
+</html>
